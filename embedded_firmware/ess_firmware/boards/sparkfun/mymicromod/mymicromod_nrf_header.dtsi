@@ -1,0 +1,75 @@
+
+/ {
+    micromod_header: connector {
+        compatible = "sparkfun,mymicromod-nrf-gpio";
+        #gpio-cells = <2>;
+        gpio-map-mask = <0xffffffff 0xffffffc0>;
+        gpio-map-pass-thru = <0 0x3f>;
+        gpio-map =
+        /* Top Pins */
+        /*75: GND */
+        <73 0 &gpio0 17 0>, /* G5 */
+        <71 0 &gpio1 6 0>, /* G6 */
+        <69 0 &gpio1 4 0>, /* G7 */
+        <67 0 &gpio1 14 0>, /* G8 */
+        <65 0 &gpio0 9 0>, /* G9 */
+        <63 0 &gpio0 10 0>, /* G10 */
+        <61 0 &gpio0 2 0>, /* SPI_MISO */
+        <59 0 &gpio0 31 0>, /* SPI_MOSI */
+        <57 0 &gpio0 28 0>, /* SPI_SCK */
+        <55 0 &gpio0 20 0>, /* SPI_CS */
+        <53 0 &gpio0 24 0>, /* I2C_SCL1 */
+        <51 0 &gpio1 1 0>, /* I2C_SDA1 */
+        /*49: Bat VIN*/
+        <47 0 &gpio0 16 0>, /* PWM1 */
+        /*45: GND*/
+        /* 43: CAN_TX not connected*/
+        /* 41: CAN_RX not connected*/
+        /*39: GND*/
+        /*37: USBHOST_D- not connected*/
+        /*35: USBHOST_D+ not connected*/
+        /*33: GND*/
+        /*25, 27, 29, 31 Module Key */
+        /*21, 23 SWD */
+        <19 0 &gpio1 10 0>, /* UART_RX1 */
+        <17 0 &gpio1 3 0>, /* UART_TX1 */
+        <15 0 &gpio1 9 0>, /* UART_CTS1 */
+        <13 0 &gpio1 2 0>, /* UART_RTS1 */
+        <11 0 &gpio0 7 0>, /* BOOT */
+        /*1: GND, 3: USB_D+ 5: USB_D-, 7: GND 9: USB_VIN */
+
+        /* Bottom Pins */
+        /*75: GND */
+        <70 0 &gpio1 0 0>, /* SPI_CS1/SDIO_DATA3 */
+        <68 0 &gpio0 23 0>, /* SDIO_DATA2 */
+        <66 0 &gpio0 22 0>, /* SDIO_DATA1 */
+        <64 0 &gpio0 21 0>, /* SPI_MISO1/SDIO_DATA0 */
+        <62 0 &gpio0 14 0>, /* SPI_MOSI1/SDIO_CMD */
+        <60 0 &gpio0 19 0>, /* SPI_SCK1/SDIO_SCK */
+        /* 54, 56, 58 not Connected */
+        <52 0 &gpio0 26 0>, /* PDM Data */
+        <50 0 &gpio0 25 0>, /* PDM CLK */
+        <48 0 &gpio1 11 0>, /* G4 */
+        <46 0 &gpio1 12 0>, /* G3 */
+        <44 0 &gpio1 13 0>, /* G2 */
+        <42 0 &gpio0 3 0>, /* G1 */
+        <40 0 &gpio0 29 0>, /* G0 */
+        <38 0 &gpio0 5 0>, /* A1 */
+        /*36: GND*/
+        <34 0 &gpio0 4 0>, /* A0 */
+        <32 0 &gpio0 6 0>, /* PWM0 */
+        /*24, 26, 28, 30 Module Key */
+        <22 0 &gpio1 5 0>, /* UART_RX2 */
+        <20 0 &gpio1 7 0>, /* UART_TX2 */
+        <18 0 &gpio1 8 0>, /* D1 */
+        <16 0 &gpio0 15 0>, /* I2C_INT */
+        <14 0 &gpio0 11 0>, /* I2C_SCL */
+        <12 0 &gpio0 8 0>, /* I2C_SDA */
+        <10 0 &gpio0 27 0>, /* D0 */
+        /* 8: G11 not connected */
+        <6 0 &gpio0 18 0>, /* RESETn */
+        <4 0 &gpio1 15 0>; /* 3.3_EN */
+        /*2: 3.3V*/
+
+    };
+};

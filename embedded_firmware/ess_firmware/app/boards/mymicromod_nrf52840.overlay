@@ -1,0 +1,69 @@
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    fstab {
+        compatible = "zephyr,fstab";
+        lfs1: lfs1 {
+            compatible = "zephyr,fstab,littlefs";
+            mount-point = "/lfs1";
+            partition = <&littlefs_partition>;
+            automount;
+            read-size = <16>;
+            prog-size = <16>;
+            cache-size = <64>;
+            lookahead-size = <32>;
+            block-cycles = <512>;
+        };
+    };
+
+    // Use Boot button as a button
+    buttons {
+        compatible = "gpio-keys";
+        button0: button_0 {
+            gpios = <&micromod_header 11 GPIO_ACTIVE_LOW>;
+            label = "Push button switch 0";
+            zephyr,code = <INPUT_KEY_0>;
+        };
+    };
+
+};
+
+&leds {
+    bt_led: bt_led_0 {
+        gpios = <&micromod_header 18 GPIO_ACTIVE_HIGH>;
+        label = "BT CONN LED";
+    };
+
+    // Uses PWM 1 aka pwm0 Ch 2
+    bt_led1: bt_led_1 {
+        gpios = <&micromod_header 47 GPIO_ACTIVE_HIGH>;
+        label = "LBS LED";
+    };
+};
+
+&w25q128jv {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        littlefs_partition: partition@0 {
+            label = "littlefs";
+            reg = <0x00000000 DT_SIZE_M(16)>;
+        };
+    };
+};
+
+&spi0 {
+    compatible = "nordic,nrf-spim";
+    rx-delay-supported;
+    rx-delay = <0x2>;
+    status = "okay";
+    cs-gpios = <&micromod_header 10 GPIO_ACTIVE_LOW>;
+
+    bme280: bme280@0 {
+        compatible = "bosch,bme280";
+        reg = <0>;
+        spi-max-frequency = <125000>;
+    };
+};

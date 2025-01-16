@@ -1,0 +1,188 @@
+/*
+ * Copyright (c) 2024 Abdulrahman Aminu <aminuabdulrahmandayo@gmail.com>
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <nordic/nrf52840_qiaa.dtsi>
+#include "mymicromod_nrf52840.dtsi"
+#include "mymicromod_nrf_header.dtsi"
+
+/ {
+	model = "SparkFun MicroMod nRF52840";
+	compatible = "sparkfun,mymicromod-nrf52840";
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+		zephyr,ieee802154 = &ieee802154;
+	};
+
+	leds: leds {
+		compatible = "gpio-leds";
+		led0: led_0 {
+			gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
+			label = "Stat LED";
+		};
+	};
+
+	pwmleds {
+		compatible = "pwm-leds";
+		// pwm0 Ch 2
+		pwm_led0: pwm_led_0 {
+			pwms = <&pwm0 2 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+		};
+	};
+
+
+	/* These aliases are provided for compatibility with samples */
+	aliases {
+		led0 = &led0;
+		bootloader-led0 = &led0;
+		mcuboot-led0 = &led0;
+		watchdog0 = &wdt0;
+		pwm-led0 = &pwm_led0;
+	};
+};
+
+&adc {
+	status = "okay";
+};
+
+&uicr {
+	gpio-as-nreset;
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&uart0 {
+	compatible = "nordic,nrf-uarte";
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-1 = <&uart0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&uart1 {
+	compatible = "nordic,nrf-uarte";
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart1_default>;
+	pinctrl-1 = <&uart1_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&i2c0 {
+	compatible = "nordic,nrf-twi";
+	status = "okay";
+	pinctrl-0 = <&i2c0_default>;
+	pinctrl-1 = <&i2c0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&i2c1 {
+	compatible = "nordic,nrf-twi";
+	/* Cannot be used together with spi1. */
+	/* status = "okay"; */
+	pinctrl-0 = <&i2c1_default>;
+	pinctrl-1 = <&i2c1_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&pwm0 {
+	status = "okay";
+	pinctrl-0 = <&pwm0_default>;
+	pinctrl-1 = <&pwm0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&pdm0 {
+	status = "okay";
+	pinctrl-0 = <&pdm0_default>;
+	pinctrl-names = "default";
+	clock-source = "PCLK32M_HFXO";
+};
+
+&spi0 {
+	compatible = "nordic,nrf-spi";
+	status = "okay";
+	pinctrl-0 = <&spi0_default>;
+	pinctrl-1 = <&spi0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+
+&qspi {
+	status = "okay";
+	pinctrl-0 = <&qspi_default>;
+	pinctrl-1 = <&qspi_sleep>;
+	pinctrl-names = "default", "sleep";
+	w25q128jv: w25q128jv@0 {
+		status="okay";
+		compatible = "nordic,qspi-nor";
+		reg = <0>;
+		jedec-id = [ EF 70 18  ];
+		size = <DT_SIZE_M(128)>;
+		readoc = "fastread";
+		writeoc = "pp";
+		sck-frequency = <DT_FREQ_M(32)>;
+		has-dpd;
+		t-enter-dpd = <3000>;
+		t-exit-dpd = <3500>;
+	};
+};
+
+&ieee802154 {
+	status = "okay";
+};
+
+&flash0 {
+
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 0x0000C000>;
+		};
+		slot0_partition: partition@c000 {
+			label = "image-0";
+			reg = <0x0000C000 0x00076000>;
+		};
+		slot1_partition: partition@82000 {
+			label = "image-1";
+			reg = <0x00082000 0x00076000>;
+		};
+
+		/*
+		 * The flash starting at 0x000f8000 and ending at
+		 * 0x000fffff is reserved for use by the application.
+		 */
+
+		/*
+		 * Storage partition will be used by FCB/LittleFS/NVS
+		 * if enabled.
+		 */
+		storage_partition: partition@f8000 {
+			label = "storage";
+			reg = <0x000f8000 0x00008000>;
+		};
+	};
+};

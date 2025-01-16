@@ -1,0 +1,11 @@
+# Sparkfun micromod board configuration
+
+# Copyright (c) 2024 Abdulrahman Aminu <aminuabdulrahmandayo@gmail.com>
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_MYMICROMOD_NRF52840
+
+config BT_CTLR
+	default BT
+
+endif

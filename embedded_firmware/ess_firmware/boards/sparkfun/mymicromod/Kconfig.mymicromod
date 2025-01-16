@@ -1,0 +1,7 @@
+# Sparkfun micromod board configuration
+
+# Copyright (c) 2024 Abdulrahman Aminu <aminuabdulrahmandayo@gmail.com>
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_MYMICROMOD
+	select SOC_NRF52840_QIAA if BOARD_MYMICROMOD_NRF52840

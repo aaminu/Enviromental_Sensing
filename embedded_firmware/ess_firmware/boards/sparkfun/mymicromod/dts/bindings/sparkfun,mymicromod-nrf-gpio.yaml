@@ -1,0 +1,47 @@
+description: |
+    GPIO pins exposed for SparkFun MicroMod solderless modular interface.
+
+
+        /* Top Pins */                       /* Bottom Pins */
+        75 GND  
+        73 G5                               74 3.3V
+        71 G6                               72 RTC_3V_BATT
+        69 G7                               70 SPI_CS1/SDIO_DATA3 
+        67 G8                               68 SDIO_DATA2
+        65 G9                               66 SDIO_DATA1
+        63 G10                              64 SPI_MISO1/SDIO_DATA0
+        61 SPI_MISO                         62 SPI_MOSI1/SDIO_CMD
+        59 SPI_MOSI                         60 SPI_SCK1/SDIO_SCK
+        57 SPI_SCK                          58 AUD_MCLK
+        55 SPI_CS                           56 AUD_OUT/I2S_OUT
+        53 I2C_SCL1                         54 AUD_IN/I2S_IN
+        51 I2C_SDA1                         52 PDM DATA
+        49: Bat VIN                         50 PDM CLK
+        47 PWM1                             48 G4
+        45 GND                              46 G3
+        43 CAN_TX                           44 G2
+        41 CAN_RX                           42 G1
+        39 GND                              40 G0
+        37 USBHOST_D-                       38 A1
+        35 USBHOST_D+                       36: GND
+        33 GND                              34 A0
+        31 Module Key                       32 PWM0
+        29 Module Key                       30 Module Key
+        27 Module Key                       28 Module Key
+        25 Module Key                       26 Module Key
+        23 SWDIO                            24 Module Key
+        21 SWDCK                            22 UART_RX2
+        19 UART_RX1                         20 UART_TX2
+        17 UART_TX1                         18 D1
+        15 UART_CTS1                        16 I2C_INT
+        13 UART_RTS1                        14 I2C_SCL
+        11 BOOT                             12 I2C_SDA
+        9 USB_VIN                           10 D0
+        7 GND                               8 G11
+        5 USB_D-                            6 RESETn 
+        3 USB_D+                            4 3.3_EN 
+        1 GND                               2: 3.3V
+
+compatible: "sparkfun,mymicromod-nrf-gpio"
+
+include: [gpio-nexus.yaml, base.yaml]

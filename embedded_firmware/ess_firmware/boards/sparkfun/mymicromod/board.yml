@@ -1,0 +1,5 @@
+board:
+  name: mymicromod
+  vendor: sparkfun
+  socs:
+  - name: nrf52840
