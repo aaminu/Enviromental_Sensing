@@ -11,9 +11,13 @@
 
 LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
 
+extern int bt_space_init(void);
+
 int main(void)
 {
 	printk("ESS App %s\n", APP_VERSION_STRING);
+
+	bt_space_init(); // Initialize the Bluetooth
 
 	sensor_data_t rcvd_sensor_data = {0};
 
@@ -23,12 +27,9 @@ int main(void)
 		if (ret == 0)
 		{
 			LOG_INF("\t\t Sensor Data");
-			LOG_INF("\tTemperature: \t %8d.%3d C",
-					rcvd_sensor_data.temperature.val1, rcvd_sensor_data.temperature.val2 / 1000);
-			LOG_INF("\tPressure:    \t %8d.%3d Pa",
-					rcvd_sensor_data.pressure.val1, rcvd_sensor_data.pressure.val2 / 1000);
-			LOG_INF("\tHumidity:    \t %8d.%3d %%RH\n\n",
-					rcvd_sensor_data.humidity.val1, rcvd_sensor_data.humidity.val2 / 1000);
+			LOG_INF("\tTemperature: \t %.2f C", sensor_value_to_double(&rcvd_sensor_data.temperature));
+			LOG_INF("\tPressure:    \t %.2f Pa", sensor_value_to_double(&rcvd_sensor_data.pressure));
+			LOG_INF("\tHumidity:    \t %.2f %%RH\n\n", sensor_value_to_double(&rcvd_sensor_data.humidity));
 		}
 
 		k_sleep(K_MSEC(1000));
