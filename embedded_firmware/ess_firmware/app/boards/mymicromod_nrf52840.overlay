@@ -28,18 +28,6 @@
 
 };
 
-&leds {
-    bt_led: bt_led_0 {
-        gpios = <&micromod_header 18 GPIO_ACTIVE_HIGH>;
-        label = "BT CONN LED";
-    };
-
-    // Uses PWM 1 aka pwm0 Ch 2
-    bt_led1: bt_led_1 {
-        gpios = <&micromod_header 47 GPIO_ACTIVE_HIGH>;
-        label = "LBS LED";
-    };
-};
 
 &w25q128jv {
     partitions {
