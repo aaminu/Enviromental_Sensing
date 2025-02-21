@@ -4,7 +4,7 @@
 #include <zephyr/bluetooth/gap.h>
 #include <zephyr/bluetooth/gatt.h>
 
-LOG_MODULE_REGISTER(bt_space, CONFIG_APP_LOG_LEVEL);
+LOG_MODULE_REGISTER(dev_bt, CONFIG_APP_LOG_LEVEL);
 
 #define DEVICE_NAME CONFIG_BT_DEVICE_NAME
 #define DEVICE_NAME_LEN (sizeof(DEVICE_NAME) - 1)
@@ -151,7 +151,7 @@ static void update_mtu(struct bt_conn *conn)
     }
 }
 
-void on_le_param_updated(struct bt_conn *conn, uint16_t interval, uint16_t latency, uint16_t timeout)
+static void on_le_param_updated(struct bt_conn *conn, uint16_t interval, uint16_t latency, uint16_t timeout)
 {
     double connection_interval = interval * 1.25; // in ms
     uint16_t supervision_timeout = timeout * 10;  // in ms
@@ -159,7 +159,7 @@ void on_le_param_updated(struct bt_conn *conn, uint16_t interval, uint16_t laten
             connection_interval, latency, supervision_timeout);
 }
 
-void on_le_phy_updated(struct bt_conn *conn, struct bt_conn_le_phy_info *param)
+static void on_le_phy_updated(struct bt_conn *conn, struct bt_conn_le_phy_info *param)
 {
     // PHY Updated
     if (param->tx_phy == BT_CONN_LE_TX_POWER_PHY_1M) {
@@ -173,7 +173,7 @@ void on_le_phy_updated(struct bt_conn *conn, struct bt_conn_le_phy_info *param)
     }
 }
 
-void on_le_data_len_updated(struct bt_conn *conn, struct bt_conn_le_data_len_info *info)
+static void on_le_data_len_updated(struct bt_conn *conn, struct bt_conn_le_data_len_info *info)
 {
     uint16_t tx_len     = info->tx_max_len; 
     uint16_t tx_time    = info->tx_max_time;
